@@ -1,8 +1,5 @@
-box: python:2.7.13-slim
+box: wercker/default
 build:
-    box:
-      id: alpine
-      cmd: /bin/sh
     steps:
         - shellcheck
 
@@ -39,6 +36,7 @@ build:
         - script:
             name: Copy gcloud to output dir
             code: |
+                rm -rf ${GCLOUD_DIRNAME}/.install ${GCLOUD_DIRNAME}/RELEASE_NOTES ${GCLOUD_DIR}/install.bat ${GCLOUD_DIR}/install.sh 
                 cp -r "${GCLOUD_DIRNAME}" ${WERCKER_OUTPUT_DIR}
 
         - script:
