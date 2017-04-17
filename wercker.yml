@@ -1,4 +1,4 @@
-box: alpine
+box: python:2.7.13-slim
 build:
     box:
       id: alpine
