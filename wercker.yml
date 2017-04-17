@@ -8,22 +8,10 @@ build:
             code: |
                 GCLOUD_VERSION="151.0.1-linux-x86_64"
                 export GCLOUD_DIRNAME="google-cloud-sdk"
-                export KUBERNETES_VERSION="1.6.1"
-                export KUBERNETES_SHA256="4d36675f8239d31c0831cfcb956eb07604cf70a7739233597bce0e87e46c42b0"
                 export GCLOUD_SHA="26b84898bc7834664f02b713fd73c7787e62827d2d486f58314cdf1f6f6c56bb"
                 export GCLOUD_FILENAME="${GCLOUD_DIRNAME}-${GCLOUD_VERSION}.tar.gz"
                 export GCLOUD_URL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/${GCLOUD_FILENAME}"
-                echo "Installing version $KUBERNETES_VERSION of kubernetes and ${GCLOUD_VERSION} of the Google Cloud SDK"
-
-        - script:
-            name: fetch kubernetes archive
-            code: |
-                curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBERNETES_VERSION}/bin/linux/amd64/kubectl > $WERCKER_OUTPUT_DIR/kubectl
-
-        - script:
-            name: validate kubernetes archive
-            code: |
-                cat $WERCKER_OUTPUT_DIR/kubectl| sha256sum | grep -q "$KUBERNETES_SHA256"
+                echo "Installing version ${GCLOUD_VERSION} of the Google Cloud SDK"
 
         - script:
             name: Fetch gcloud archive
@@ -55,4 +43,4 @@ build:
             code: |
                 cp  "${WERCKER_ROOT}/LICENSE" "${WERCKER_ROOT}/README.md" "${WERCKER_ROOT}/run.sh" "${WERCKER_ROOT}/wercker.yml" "${WERCKER_ROOT}/wercker-step.yml" "$WERCKER_OUTPUT_DIR"
                 chmod ugo+rx "$WERCKER_OUTPUT_DIR/${GCLOUD_DIRNAME}/bin/gcloud"
-                chmod ugo+rx "$WERCKER_OUTPUT_DIR/kubectl"
+                chmod ugo+rx "$WERCKER_OUTPUT_DIR/${GCLOUD_DIRNAME}/bin/kubectl"
